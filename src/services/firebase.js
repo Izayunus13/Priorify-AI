@@ -2,6 +2,7 @@ import { initializeApp } from "firebase/app";
 import {
   getAuth,
   GoogleAuthProvider,
+  onAuthStateChanged,
   signInWithPopup,
   signOut,
 } from "firebase/auth";
@@ -28,4 +29,18 @@ export async function loginWithGoogle() {
 
 export async function logoutGoogle() {
   await signOut(auth);
+}
+
+const SESSION_MAX_AGE = 30 * 24 * 60 * 60 * 1000; // 30 hari
+
+// Firebase menyimpan sesi di browser; di sini sesi diakhiri 30 hari setelah login terakhir.
+export function watchAuth(callback) {
+  return onAuthStateChanged(auth, (user) => {
+    const lastSignIn = Date.parse(user?.metadata.lastSignInTime ?? "");
+    if (user && Date.now() - lastSignIn > SESSION_MAX_AGE) {
+      signOut(auth);
+      return;
+    }
+    callback(user);
+  });
 }

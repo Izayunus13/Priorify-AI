@@ -1,4 +1,4 @@
-import { loginWithGoogle, logoutGoogle } from "./services/firebase";
+import { loginWithGoogle, logoutGoogle, watchAuth } from "./services/firebase";
 import { useEffect, useMemo, useState } from "react";
 
 import Navbar from "./components/Navbar";
@@ -38,6 +38,17 @@ function App() {
   function openDemo(destination = "dashboard") { setIsLogin(true); setPage(destination); }
   const [isLogin, setIsLogin] = useState(false);
   const [user, setUser] = useState(null);
+
+  useEffect(() => watchAuth((firebaseUser) => {
+    if (!firebaseUser) return;
+    setUser({
+      name: firebaseUser.displayName,
+      email: firebaseUser.email,
+      photo: firebaseUser.photoURL,
+    });
+    setIsLogin(true);
+    setPage((current) => (current === "landing" || current === "login" ? "dashboard" : current));
+  }), []);
 
   const [tasks, setTasks] = useState(() =>
     loadData("priorify_tasks", initialTasks)
