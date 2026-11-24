@@ -7,12 +7,12 @@ import {
 } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyChaZK20A-OsGNrbt72Kw_RZSnUM5a4",
+  apiKey: "AIzaSyCV4hazK20A-QsGNrbT72Kw_R7SnNUm5a4",
   authDomain: "priorify-ai-119f1.firebaseapp.com",
   projectId: "priorify-ai-119f1",
   storageBucket: "priorify-ai-119f1.firebasestorage.app",
   messagingSenderId: "730513708176",
-  appId: "1:730513708176:web:ab5f2026e18bb5492f415",
+  appId: "1:730513708176:web:aeb5f2026e18bb5492f415",
   measurementId: "G-ZZQNFVZVGK",
 };
 
